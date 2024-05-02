@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
-
 public class BoardService {
 
     private final BoardMapper mapper;
@@ -27,5 +26,13 @@ public class BoardService {
     public List<Board> list() {
 
         return mapper.selectAll();
+    }
+
+    public void remove(Integer id) {
+        mapper.deleteById(id);
+    }
+
+    public void modify(Board board) {
+        mapper.update(board);
     }
 }
