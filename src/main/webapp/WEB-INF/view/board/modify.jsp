@@ -9,46 +9,61 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
+
 <c:import url="/WEB-INF/fragment/navbar.jsp"/>
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-6">
+            <h3 class="mb-4">회원 정보 수정</h3>
+            <form action="/member/modify" method="post" onsubmit="return confirm('저장하시겠습니까?')">
+                <input type="hidden" name="id" value="${member.id}">
+                <%-- div.mb-3>label.form-label+input.form-control-plaintext[readonly]--%>
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">이메일</label>
+                    <input id="inputEmail" type="email" value="${member.email}" class="form-control-plaintext"
+                           readonly="">
+                </div>
 
+                <%--    div.mb-3*2>label.form-label+input.form-control[name][value]--%>
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label">암호</label>
+                    <input oninput="passwordCheck()" id="inputPassword" type="password" class="form-control"
+                           name="password"
+                           value="${member.password}">
+                </div>
+                <div class="mb-3">
+                    <label for="inputPasswordCheck" class="form-label">암호</label>
+                    <input oninput="passwordCheck()" id="inputPasswordCheck" type="password" class="form-control"
+                           value="${member.password}">
+                    <div id="passwordMessage" class="form-text"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="inputNickName" class="form-label">별명</label>
+                    <input id="inputNickName" type="text" class="form-control" name="nickName"
+                           value="${member.nickName}">
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-secondary">저장</button>
+                </div>
 
-            <h3 class="mb-4">${board.id}번 게시물 수정</h3>
-            <form action="/modify" method="post">
-                <input type="hidden" name="id" value="${board.id}">
-                <div class="mb-3">
-
-                    <label for="inputTitle" class="form-label">
-                        제목
-                    </label>
-                    <input id="inputTitle" class="form-control" type="text" name="title" value="${board.title}"
-                           required>
-                </div>
-                <div class="mb-3">
-                    <label for="textareaContent" class="form-label">
-                        본문
-                    </label>
-                    <textarea class="form-control" id="textareaContent" cols="30" rows="10" name="content"
-                              required>${board.content}</textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="inputWriter" class="form-label">
-                        작성자
-                    </label>
-                    <input id="inputWriter" class="form-control" type="text" value="${board.writer}" name="writer"
-                           required>
-                </div>
-                <div class="mb-3">
-                    <button class="btn btn-secondary">수정</button>
-                </div>
             </form>
-
         </div>
     </div>
 </div>
+
+<script>
+    function passwordCheck() {
+        const password = document.querySelector("#inputPassword").value;
+        const passwordCheck = document.querySelector("#inputPasswordCheck").value;
+
+        if (password == passwordCheck) {
+            document.querySelector("#passwordMessage").textContent = "";
+        } else {
+            document.querySelector("#passwordMessage").textContent = "패스워드가 일치하지 않습니다.";
+        }
+    }
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
         integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
